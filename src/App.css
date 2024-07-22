@@ -1,38 +1,124 @@
-.App {
-  text-align: center;
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  display: block;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.app-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: none !important;
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  div {
+    div.avatar {
+      margin-right: 10px;
+      background-color: red;
+    }
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.message-container {
+  background-color: #ffefef;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-y: auto;
+  height: 540px;
+  max-height: 540px !important;
+  margin-bottom: 16px;
+}
+
+.message {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.message.user {
+  justify-content: flex-end;
+
+  div {
+    box-shadow: none;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.message.bot {
+  justify-content: flex-start;
+
+  div {
+    box-shadow: none;
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+.message-bubble {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-width: 70%;
+  min-width: 200px;
+  word-wrap: break-word;
+  overflow: hidden; /* 추가: 말풍선 내부에 내용이 잘 맞도록 설정 */
+}
+
+.message-bubble pre {
+  overflow-x: auto; /* 추가: 코드 블록이 말풍선 밖으로 튀어나가지 않도록 설정 */
+  white-space: pre-wrap; /* 추가: 코드 블록 내 줄바꿈을 유지하도록 설정 */
+  word-wrap: break-word; /* 추가: 길이가 긴 단어를 줄 바꿈하여 말풍선 내에 맞추도록 설정 */
+}
+
+.message-bubble::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: -20px;
+  width: 0;
+  height: 0;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent #fff transparent transparent;
+}
+
+.message.user .message-bubble {
+  background-color: #ffdddd;
+}
+
+.message.user .message-bubble::before {
+  left: auto;
+  right: -20px;
+  border-color: transparent transparent transparent #ffdddd;
+}
+
+.input-field {
+  border-radius: 8px;
+}
+
+.button-send {
+  min-width: 0 !important;
+  background-color: red !important;
+  box-shadow: none !important;
+}
+
+.markdown-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  table-layout: fixed;
+}
+
+.markdown-container th,
+.markdown-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  word-wrap: break-word;
+}
+
+.markdown-container th {
+  background-color: #f2f2f2;
+  color: #333;
+  text-align: left;
 }
