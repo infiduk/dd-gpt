@@ -79,7 +79,7 @@ const App = () => {
             <b>DD</b> (Document for Developer)
           </Typography>
         </Box>
-        <p>코드를 제공해 보세요. 당신이 작성한 코드를 표로 정리해 드립니다.</p>
+        <p>코드를 제공해 보세요. 당신이 작성한 코드를 정리해 드립니다.</p>
         <Box
           sx={{ mb: 3, maxHeight: "500px", overflowY: "auto" }}
           className="message-container"
@@ -147,6 +147,24 @@ const App = () => {
               fullWidth
               variant="outlined"
               className="input-field"
+              sx={{
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "red"
+                },
+                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderWidth: "1px",
+                    borderColor: "red"
+                  },
+                "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderColor: "red"
+                  },
+                "& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderColor: "red"
+                  }
+              }}
             />
             <Button
               type="submit"

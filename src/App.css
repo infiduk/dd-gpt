@@ -62,20 +62,14 @@ body {
   max-width: 70%;
   min-width: 200px;
   word-wrap: break-word;
-  overflow: hidden; /* 추가: 말풍선 내부에 내용이 잘 맞도록 설정 */
-}
-
-.message-bubble pre {
-  overflow-x: auto; /* 추가: 코드 블록이 말풍선 밖으로 튀어나가지 않도록 설정 */
-  white-space: pre-wrap; /* 추가: 코드 블록 내 줄바꿈을 유지하도록 설정 */
-  word-wrap: break-word; /* 추가: 길이가 긴 단어를 줄 바꿈하여 말풍선 내에 맞추도록 설정 */
+  overflow: hidden;
 }
 
 .message-bubble::before {
   content: "";
   position: absolute;
   top: 15px;
-  left: -20px;
+  left: -10px;
   width: 0;
   height: 0;
   border-width: 10px;
@@ -89,8 +83,14 @@ body {
 
 .message.user .message-bubble::before {
   left: auto;
-  right: -20px;
+  right: -10px;
   border-color: transparent transparent transparent #ffdddd;
+}
+
+.message-bubble pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .input-field {
@@ -101,6 +101,7 @@ body {
   min-width: 0 !important;
   background-color: red !important;
   box-shadow: none !important;
+  height: 78px;
 }
 
 .markdown-container table {
