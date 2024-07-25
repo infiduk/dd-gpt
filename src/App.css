@@ -1,3 +1,4 @@
+/* app.css */
 body {
   font-family: "Arial", sans-serif;
   margin: 0;
@@ -11,7 +12,6 @@ body {
   padding: 32px;
   box-shadow: none !important;
   max-width: 800px;
-  width: 100%;
   margin: auto;
 
   div {
@@ -30,6 +30,8 @@ body {
   height: 540px;
   max-height: 540px !important;
   margin-bottom: 16px;
+  position: relative;
+  contain: layout; /* 추가: 레이아웃 변경 방지 */
 }
 
 .message {
@@ -62,33 +64,56 @@ body {
   max-width: 70%;
   min-width: 200px;
   word-wrap: break-word;
-  overflow: hidden;
-}
-
-.message-bubble::before {
-  content: "";
-  position: absolute;
-  top: 15px;
-  left: -10px;
-  width: 0;
-  height: 0;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent #fff transparent transparent;
+  z-index: 1; /* 추가: 다른 요소보다 위에 보이도록 설정 */
 }
 
 .message.user .message-bubble {
   background-color: #ffdddd;
+  z-index: 2; /* 추가: 다른 요소보다 위에 보이도록 설정 */
+}
+
+/* 말풍선 화살표 스타일링 */
+.message-bubble::before,
+.message-bubble::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: translateY(-50%);
+  border-style: solid;
+  z-index: 3; /* 추가: 화살표가 다른 모든 요소보다 위에 보이도록 설정 */
+}
+
+.message-bubble::before {
+  border-width: 10px;
+}
+
+.message-bubble::after {
+  border-width: 10px;
+}
+
+.message.bot .message-bubble::before {
+  left: -10px; /* 위치 조정 */
+  border-color: transparent white transparent transparent; /* 색상 조정 */
+}
+
+.message.bot .message-bubble::after {
+  left: -20px; /* 위치 조정 */
+  border-color: transparent white transparent transparent; /* 색상 조정 */
 }
 
 .message.user .message-bubble::before {
-  left: auto;
-  right: -10px;
-  border-color: transparent transparent transparent #ffdddd;
+  right: -10px; /* 위치 조정 */
+  border-color: transparent transparent transparent #ffdddd; /* 색상 조정 */
+}
+
+.message.user .message-bubble::after {
+  right: -20px; /* 위치 조정 */
+  border-color: transparent transparent transparent #ffdddd; /* 색상 조정 */
 }
 
 .message-bubble pre {
-  overflow-x: auto;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
