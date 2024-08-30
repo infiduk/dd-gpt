@@ -64,7 +64,13 @@ const App = () => {
     }
   };
 
-  const handleWrite = async () => {
+  const handleWrite = async (msg) => {
+    const title = prompt("작성될 글의 제목을 입력해 주세요:");
+
+    if (!title) {
+      alert("제목이 입력되지 않았습니다. 다시 시도해 주세요.");
+      return;
+    }
     try {
       const response = await fetch("/api/rest/api/content", {
         method: "POST",
@@ -76,12 +82,12 @@ const App = () => {
         },
         body: JSON.stringify({
           type: "page",
-          title: "ABCD",
+          title,
           space: { key: process.env.REACT_APP_CONFLUENCE_SPACE_KEY },
           ancestors: [{ id: "3564306438" }],
           body: {
             storage: {
-              value: "<p>abcd</p>",
+              value: `<p>${msg}</p>`,
               representation: "storage"
             }
           }
@@ -162,7 +168,10 @@ const App = () => {
                         <>
                           <br />
                           <br />
-                          <span {...props} onClick={handleWrite}>
+                          <span
+                            {...props}
+                            onClick={() => handleWrite(message.text)}
+                          >
                             Export to Confluence
                           </span>
                         </>
