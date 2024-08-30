@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+
 import {
   Container,
   Typography,
@@ -10,10 +14,9 @@ import {
   Alert,
   Avatar
 } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import SendIcon from "@mui/icons-material/Send";
+
 import { fetchChatGPTResponse } from "./api";
 import "./App.css";
 
@@ -43,8 +46,12 @@ const App = () => {
     setCodeInput(""); // 입력 값 초기화
 
     try {
-      const chatGPTResponse = await fetchChatGPTResponse(codeInput);
-      const botMessage = { sender: "bot", text: chatGPTResponse };
+      let chatGPTResponse = await fetchChatGPTResponse(codeInput);
+      chatGPTResponse += chatGPTResponse.includes("###") ? "<button />" : "";
+      const botMessage = {
+        sender: "bot",
+        text: chatGPTResponse
+      };
       setMessages((prevMessages) =>
         prevMessages.map((msg) => (msg.text === "..." ? botMessage : msg))
       );
@@ -54,6 +61,35 @@ const App = () => {
       setMessages((prevMessages) =>
         prevMessages.filter((msg) => msg.text !== "...")
       );
+    }
+  };
+
+  const handleWrite = async () => {
+    try {
+      const response = await fetch("/api/rest/api/content", {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${btoa(
+            `${process.env.REACT_APP_CONFLUENCE_USER_NAME}:${process.env.REACT_APP_CONFLUENCE_API_KEY}`
+          )}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type: "page",
+          title: "ABCD",
+          space: { key: process.env.REACT_APP_CONFLUENCE_SPACE_KEY },
+          ancestors: [{ id: "3564306438" }],
+          body: {
+            storage: {
+              value: "<p>abcd</p>",
+              representation: "storage"
+            }
+          }
+        })
+      });
+      console.log(response);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -109,6 +145,7 @@ const App = () => {
                   <ReactMarkdown
                     children={message.text}
                     remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeRaw]}
                     components={{
                       code({ node, inline, className, children, ...props }) {
                         return !inline ? (
@@ -120,7 +157,16 @@ const App = () => {
                             {children}
                           </code>
                         );
-                      }
+                      },
+                      button: ({ node, ...props }) => (
+                        <>
+                          <br />
+                          <br />
+                          <span {...props} onClick={handleWrite}>
+                            Export to Confluence
+                          </span>
+                        </>
+                      )
                     }}
                   />
                 </Box>

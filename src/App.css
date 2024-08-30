@@ -148,3 +148,10 @@ body {
   color: #333;
   text-align: left;
 }
+
+.markdown-container p span {
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+  text-decoration: underline;
+}
