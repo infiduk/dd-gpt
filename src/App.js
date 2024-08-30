@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import { remark } from "remark";
 import remarkGfm from "remark-gfm";
+import remarkHtml from "remark-html";
 import rehypeRaw from "rehype-raw";
 
 import {
@@ -65,6 +67,10 @@ const App = () => {
   };
 
   const handleWrite = async (msg) => {
+    // Markdown을 HTML로 변환
+    const processedContent = await remark().use(remarkHtml).process(msg);
+    const value = processedContent.toString();
+
     const title = prompt("작성될 글의 제목을 입력해 주세요:");
 
     if (!title) {
@@ -87,15 +93,16 @@ const App = () => {
           ancestors: [{ id: "3564306438" }],
           body: {
             storage: {
-              value: `<p>${msg}</p>`,
+              value,
               representation: "storage"
             }
           }
         })
       });
-      console.log(response);
+      if (!response.ok)
+        throw "잘못된 요청입니다. 제목이 중복되었을 수 있으니 다시 시도해 주세요.";
     } catch (e) {
-      console.error(e);
+      alert(e);
     }
   };
 

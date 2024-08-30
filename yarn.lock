@@ -5495,6 +5495,32 @@ hast-util-raw@^9.0.0:
     web-namespaces "^2.0.0"
     zwitch "^2.0.0"
 
+hast-util-sanitize@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/hast-util-sanitize/-/hast-util-sanitize-5.0.1.tgz#8e90068cd68e651c569960b77a1b25076579b4cf"
+  integrity sha512-IGrgWLuip4O2nq5CugXy4GI2V8kx4sFVy5Hd4vF7AR2gxS0N9s7nEAVUyeMtZKZvzrxVsHt73XdTsno1tClIkQ==
+  dependencies:
+    "@types/hast" "^3.0.0"
+    "@ungap/structured-clone" "^1.2.0"
+    unist-util-position "^5.0.0"
+
+hast-util-to-html@^9.0.0:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/hast-util-to-html/-/hast-util-to-html-9.0.2.tgz#314d8c125c36cf736e4389850b4f73871965d0c3"
+  integrity sha512-RP5wNpj5nm1Z8cloDv4Sl4RS8jH5HYa0v93YB6Wb4poEzgMo/dAAL0KcT4974dCjcNG5pkLqTImeFHHCwwfY3g==
+  dependencies:
+    "@types/hast" "^3.0.0"
+    "@types/unist" "^3.0.0"
+    ccount "^2.0.0"
+    comma-separated-tokens "^2.0.0"
+    hast-util-whitespace "^3.0.0"
+    html-void-elements "^3.0.0"
+    mdast-util-to-hast "^13.0.0"
+    property-information "^6.0.0"
+    space-separated-tokens "^2.0.0"
+    stringify-entities "^4.0.0"
+    zwitch "^2.0.4"
+
 hast-util-to-jsx-runtime@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/hast-util-to-jsx-runtime/-/hast-util-to-jsx-runtime-2.3.0.tgz#3ed27caf8dc175080117706bf7269404a0aa4f7c"
@@ -9218,6 +9244,17 @@ remark-gfm@^4.0.0:
     remark-stringify "^11.0.0"
     unified "^11.0.0"
 
+remark-html@^16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/remark-html/-/remark-html-16.0.1.tgz#9246d0cf22254c208a86531cbeb26203ae2dd34c"
+  integrity sha512-B9JqA5i0qZe0Nsf49q3OXyGvyXuZFDzAP2iOFLEumymuYJITVpiH1IgsTEwTpdptDmZlMDMWeDmSawdaJIGCXQ==
+  dependencies:
+    "@types/mdast" "^4.0.0"
+    hast-util-sanitize "^5.0.0"
+    hast-util-to-html "^9.0.0"
+    mdast-util-to-hast "^13.0.0"
+    unified "^11.0.0"
+
 remark-parse@^11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/remark-parse/-/remark-parse-11.0.0.tgz#aa60743fcb37ebf6b069204eb4da304e40db45a1"
@@ -9246,6 +9283,16 @@ remark-stringify@^11.0.0:
   dependencies:
     "@types/mdast" "^4.0.0"
     mdast-util-to-markdown "^2.0.0"
+    unified "^11.0.0"
+
+remark@^15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/remark/-/remark-15.0.1.tgz#ac7e7563260513b66426bc47f850e7aa5862c37c"
+  integrity sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==
+  dependencies:
+    "@types/mdast" "^4.0.0"
+    remark-parse "^11.0.0"
+    remark-stringify "^11.0.0"
     unified "^11.0.0"
 
 renderkid@^3.0.0:
@@ -11192,7 +11239,7 @@ zlibjs@^0.3.1:
   resolved "https://registry.yarnpkg.com/zlibjs/-/zlibjs-0.3.1.tgz#50197edb28a1c42ca659cc8b4e6a9ddd6d444554"
   integrity sha512-+J9RrgTKOmlxFSDHo0pI1xM6BLVUv+o0ZT9ANtCxGkjIVCCUdx9alUF8Gm+dGLKbkkkidWIHFDZHDMpfITt4+w==
 
-zwitch@^2.0.0:
+zwitch@^2.0.0, zwitch@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/zwitch/-/zwitch-2.0.4.tgz#c827d4b0acb76fc3e685a4c6ec2902d51070e9d7"
   integrity sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==
