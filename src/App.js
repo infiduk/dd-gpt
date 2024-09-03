@@ -27,6 +27,8 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [placeholder, setPlaceholder] = useState("코드를 입력해 주세요.");
   const messageContainerRef = useRef(null);
 
   const handleCodeChange = (event) => {
@@ -37,6 +39,7 @@ const App = () => {
     event.preventDefault();
     setError("");
     setOpenSnackbar(false);
+    setDisabled(true);
 
     const userMessage = {
       sender: "user",
@@ -63,13 +66,13 @@ const App = () => {
       setMessages((prevMessages) =>
         prevMessages.filter((msg) => msg.text !== "...")
       );
+    } finally {
+      setDisabled(false);
     }
   };
 
   const handleWrite = async (msg) => {
-    // Markdown을 HTML로 변환
-    const processedContent = await remark().use(remarkHtml).process(msg);
-    const value = processedContent.toString();
+    setDisabled(true);
 
     const title = prompt("작성될 글의 제목을 입력해 주세요:");
 
@@ -77,7 +80,13 @@ const App = () => {
       alert("제목이 입력되지 않았습니다. 다시 시도해 주세요.");
       return;
     }
+
     try {
+      setPlaceholder("Markdown으로 작성된 표의 형식을 변환하고 있습니다.");
+      // 표를 XML/XHTML 형태로 변경
+      const value = await fetchChatGPTResponse(msg, true);
+
+      setPlaceholder("컨플루언스에 업로드 중입니다.");
       const response = await fetch("/api/rest/api/content", {
         method: "POST",
         headers: {
@@ -101,8 +110,13 @@ const App = () => {
       });
       if (!response.ok)
         throw "잘못된 요청입니다. 제목이 중복되었을 수 있으니 다시 시도해 주세요.";
+
+      alert("컨플루언스에 게시글이 업로드 되었습니다!");
     } catch (e) {
       alert(e);
+    } finally {
+      setDisabled(false);
+      setPlaceholder("코드를 입력해 주세요.");
     }
   };
 
@@ -197,6 +211,7 @@ const App = () => {
               multiline
               rows={2}
               value={codeInput}
+              disabled={disabled}
               onChange={handleCodeChange}
               color="error"
               onKeyPress={(event) => {
@@ -205,7 +220,7 @@ const App = () => {
                   handleSubmit(event);
                 }
               }}
-              placeholder="코드를 입력해주세요."
+              placeholder={placeholder}
               fullWidth
               variant="outlined"
               className="input-field"
@@ -233,6 +248,7 @@ const App = () => {
               variant="contained"
               sx={{ ml: 2 }}
               className="button-send"
+              disabled={disabled}
             >
               <SendIcon />
             </Button>
